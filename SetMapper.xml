@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wqbr.gzoss.sys.setting.persistence.SetMapper">
+	
+	<resultMap type="Seting" id="SetingMap">
+		<id property="id" column="id" />
+		<result property="name" column="name"/>
+	  	<result property="sbjbjg" column="sbjbjg"/>	
+	</resultMap>
+	
+	<!-- 查询保存的数据列表展示 -->
+	<select id="findSetByCondition" parameterType="Seting" resultMap="SetingMap" resultType="List">
+		select id,sbjbjg,name from s_0000_tjdj
+	</select>
+	
+	<!-- 查询保存的条数 -->
+	<select id="findSetNumByCondition" parameterType="Seting" resultType="int">
+		select count(1) from s_0000_tjdj
+	</select>
+	
+	<!-- 查询是否保存 -->
+	<select id="findSetBySbjbjg" parameterType="Seting" resultType="boolean">
+		select count(1) from s_0000_tjdj where sbjbjg=#{sbjbjg}
+	</select>
+	
+	<!-- 保存 -->
+	<insert id="insert" parameterType="Seting">
+		<selectKey keyProperty="id" resultType="String" order="BEFORE">
+		    select sys_guid() as id from dual
+		</selectKey>
+		insert into s_0000_tjdj(id,sbjbjg,name)
+		values(#{id},#{sbjbjg},#{name})
+	</insert>
+	
+	<delete id="delete" parameterType="Seting">
+		delete from s_0000_tjdj where id=#{id}
+	</delete>
+</mapper>
